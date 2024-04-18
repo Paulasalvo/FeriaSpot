@@ -31,7 +31,7 @@ fun FeriaCard() {
             .height(300.dp)
             .padding(15.dp)
     ) {
-        Text(text = "Hello, world!")
+        Text(text = "FeriaCard")
     }
 }
 
