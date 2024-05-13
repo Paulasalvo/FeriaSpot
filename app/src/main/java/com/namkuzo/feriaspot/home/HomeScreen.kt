@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.ui.component.SpotCard
@@ -25,6 +23,7 @@ import com.namkuzo.feriaspot.ui.component.SpotCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel()
 ) {
     val spotUiState by viewModel.spotsStateFlow.collectAsState()
@@ -32,7 +31,7 @@ fun HomeScreen(
     when (spotUiState) {
         is SpotUiState.Loading -> {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(text = "Loading...")
@@ -40,6 +39,7 @@ fun HomeScreen(
         }
         is SpotUiState.Success -> {
             HomeScreen(
+                modifier = modifier,
                 spots = (spotUiState as? SpotUiState.Success)?.spots ?: emptyList()
             )
         }
@@ -63,10 +63,13 @@ fun HomeScreen(
 
 @Composable
 private fun HomeScreen(
+    modifier: Modifier = Modifier,
     spots: List<Spot>
 ){
     if (spots.isNotEmpty()) {
-        Column {
+        Column(
+            modifier = modifier
+        ) {
             LazyColumn {
                 items(spots) { spot ->
                     SpotCard(spot = spot) {
