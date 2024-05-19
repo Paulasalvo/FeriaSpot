@@ -24,7 +24,15 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = service.getAllSpots()
-                _spotsStateFlow.value = SpotUiState.Success(response.map { Spot(it.id, it.name) })
+                _spotsStateFlow.value = SpotUiState.Success(response.map {
+                    Spot(
+                        it.id,
+                        it.name,
+                        it.comuna,
+                        it.standDay,
+                        it.schedule
+                    )
+                })
             } catch (e: Exception) {
                 _spotsStateFlow.value = SpotUiState.Error(message = e.message.orEmpty() + e.cause?.message.toString())
             }

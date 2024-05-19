@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FeriaSpot</string>
+    <string name="icon_profile">Profile icon</string>
+    <string name="icon_filter">Filter icon</string>
+    <string name="home">Home</string>
 </resources>

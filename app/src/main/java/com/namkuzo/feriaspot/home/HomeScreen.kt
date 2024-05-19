@@ -2,6 +2,7 @@ package com.namkuzo.feriaspot.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,7 +71,9 @@ private fun HomeScreen(
         Column(
             modifier = modifier
         ) {
-            LazyColumn {
+            LazyColumn(
+                contentPadding = PaddingValues(top = 16.dp)
+            ) {
                 items(spots) { spot ->
                     SpotCard(spot = spot) {
 

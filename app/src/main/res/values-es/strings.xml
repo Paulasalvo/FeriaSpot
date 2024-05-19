@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FeriaSpot</string>
+    <string name="icon_profile">Icono de perfil</string>
+    <string name="icon_filter">Icono de filtro</string>
+    <string name="home">Inicio</string>
+</resources>
