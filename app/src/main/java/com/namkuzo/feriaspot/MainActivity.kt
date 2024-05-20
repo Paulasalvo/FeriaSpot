@@ -1,14 +1,15 @@
 package com.namkuzo.feriaspot
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.home.HomeScreen
 import com.namkuzo.feriaspot.ui.component.SpotTopBar
 import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                                 onClick = { /*TODO*/ },
                                 icon = {
                                     Icon(
-                                        painter = painterResource(id = R.drawable.ic_home_off),
+                                        painter = if (true) painterResource(id = R.drawable.ic_home_on) else painterResource(id = R.drawable.ic_home_off),
                                         contentDescription = stringResource(id = R.string.home)
                                     )
                                 },
@@ -65,11 +67,25 @@ class MainActivity : ComponentActivity() {
                     }
                 ) {
                     HomeScreen(
-                        modifier = Modifier.padding(it)
+                        modifier = Modifier.padding(it),
+                        onClickMap = {
+                            openMap(it)
+                        }
                     )
                 }
 
             }
+        }
+    }
+
+    private fun openMap(latLng: LatLng) {
+        val uri = "http://maps.google.com/maps?q=loc:${latLng.latitude},${latLng.longitude}?z=15"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        intent.setPackage("com.google.android.apps.maps")
+        try {
+            startActivity(intent)
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(this, getString(R.string.app_not_found), Toast.LENGTH_SHORT).show()
         }
     }
 }

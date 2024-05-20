@@ -25,6 +25,7 @@ android {
         properties.load(project.rootProject.file("local.properties").inputStream())
         buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
         buildConfigField("String", "LOCAL_API", "\"${properties.getProperty("LOCAL_API")}\"")
+        buildConfigField("String", "SERVER_API", "\"${properties.getProperty("SERVER_API")}\"")
     }
 
     buildTypes {
@@ -69,6 +70,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     implementation ("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 
     // Viewmodel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
@@ -78,6 +80,9 @@ dependencies {
 
     // Moshi
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     testImplementation("junit:junit:4.13.2")
 

@@ -4,4 +4,9 @@
     <string name="icon_profile">Profile icon</string>
     <string name="icon_filter">Filter icon</string>
     <string name="home">Home</string>
+    <string name="map">Map</string>
+    <string name="schedule">Schedule: %s</string>
+    <string name="no_image">No image</string>
+    <string name="image">Image</string>
+    <string name="app_not_found">App not found</string>
 </resources>

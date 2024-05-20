@@ -30,7 +30,8 @@ fun getClient() : Retrofit {
 
     return retrofit
         .client(client)
-        .baseUrl(BuildConfig.LOCAL_API)
+        //.baseUrl(BuildConfig.LOCAL_API)
+        .baseUrl(BuildConfig.SERVER_API)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 }
@@ -41,7 +42,7 @@ class InterceptorSpot() : Interceptor {
             .addHeader("ApiKey", BuildConfig.API_KEY)
             .build()
 
-        Log.i("Interceptor", request.headers().toString())
+        Log.i("Interceptor", request.headers.toString())
         return chain.proceed(request)
     }
 

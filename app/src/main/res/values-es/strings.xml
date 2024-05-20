@@ -4,4 +4,9 @@
     <string name="icon_profile">Icono de perfil</string>
     <string name="icon_filter">Icono de filtro</string>
     <string name="home">Inicio</string>
+    <string name="map">Mapa</string>
+    <string name="schedule">Horario: %s</string>
+    <string name="no_image">Sin imagen</string>
+    <string name="image">Imagen</string>
+    <string name="app_not_found">No se ha podido abrir la app de maps</string>
 </resources>

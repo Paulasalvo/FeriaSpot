@@ -2,6 +2,7 @@ package com.namkuzo.feriaspot.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.network.SpotService
 import com.namkuzo.feriaspot.network.getService
@@ -30,7 +31,9 @@ class HomeViewModel : ViewModel() {
                         it.name,
                         it.comuna,
                         it.standDay,
-                        it.schedule
+                        it.schedule,
+                        it.imageUrl.orEmpty(),
+                        LatLng(it.latitud, it.longitud)
                     )
                 })
             } catch (e: Exception) {

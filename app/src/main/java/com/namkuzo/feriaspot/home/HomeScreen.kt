@@ -17,7 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.ui.component.SpotCard
 
@@ -25,9 +27,10 @@ import com.namkuzo.feriaspot.ui.component.SpotCard
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = viewModel(),
+    onClickMap: (LatLng) -> Unit
 ) {
-    val spotUiState by viewModel.spotsStateFlow.collectAsState()
+    val spotUiState by viewModel.spotsStateFlow.collectAsStateWithLifecycle()
 
     when (spotUiState) {
         is SpotUiState.Loading -> {
@@ -41,7 +44,8 @@ fun HomeScreen(
         is SpotUiState.Success -> {
             HomeScreen(
                 modifier = modifier,
-                spots = (spotUiState as? SpotUiState.Success)?.spots ?: emptyList()
+                spots = (spotUiState as? SpotUiState.Success)?.spots ?: emptyList(),
+                onClickMap = onClickMap
             )
         }
         is SpotUiState.Error -> {
@@ -65,7 +69,8 @@ fun HomeScreen(
 @Composable
 private fun HomeScreen(
     modifier: Modifier = Modifier,
-    spots: List<Spot>
+    spots: List<Spot>,
+    onClickMap: (LatLng) -> Unit
 ){
     if (spots.isNotEmpty()) {
         Column(
@@ -75,9 +80,11 @@ private fun HomeScreen(
                 contentPadding = PaddingValues(top = 16.dp)
             ) {
                 items(spots) { spot ->
-                    SpotCard(spot = spot) {
-
-                    }
+                    SpotCard(
+                        spot = spot,
+                        onClick = {},
+                        onClickMap = onClickMap
+                    )
                 }
             }
         }
