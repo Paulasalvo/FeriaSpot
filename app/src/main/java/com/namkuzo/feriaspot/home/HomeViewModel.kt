@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.data.Spot
+import com.namkuzo.feriaspot.data.source.Source
 import com.namkuzo.feriaspot.network.SpotService
 import com.namkuzo.feriaspot.network.getService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,14 +18,14 @@ class HomeViewModel : ViewModel() {
     val spotsStateFlow: StateFlow<SpotUiState?> = _spotsStateFlow
 
     init {
-        fetchAllSpots()
+        fetchSpots()
     }
 
-    private fun fetchAllSpots() {
+    fun fetchSpots(indexComuna: Int = -1) {
         _spotsStateFlow.value = SpotUiState.Loading
         viewModelScope.launch {
             try {
-                val response = service.getAllSpots()
+                val response = service.getAllSpots(getComunas().getOrNull(indexComuna))
                 _spotsStateFlow.value = SpotUiState.Success(response.map {
                     Spot(
                         it.id,
@@ -42,6 +43,9 @@ class HomeViewModel : ViewModel() {
 
         }
     }
+
+    fun getComunas() : List<String> = Source.getAllComunas()
+
 }
 
 sealed interface SpotUiState {

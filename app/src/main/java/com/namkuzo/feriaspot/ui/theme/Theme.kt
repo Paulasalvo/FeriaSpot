@@ -18,6 +18,7 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Green90,
+    onPrimary = Color.White,
     secondary = Pink40,
     tertiary = Pink80,
     primaryContainer = Green80,
@@ -45,7 +46,7 @@ private val LightColorScheme = lightColorScheme(
 fun FeriaSpotTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

@@ -9,10 +9,13 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface SpotService {
     @GET("allSpots")
-    suspend fun getAllSpots() : List<SpotDTO>
+    suspend fun getAllSpots(
+        @Query("comuna") comuna: String? = null
+    ) : List<SpotDTO>
 }
 
 fun getService() : SpotService {

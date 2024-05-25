@@ -26,6 +26,7 @@ import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 @Composable
 fun SpotTopBar(
     scrollBehavior: TopAppBarScrollBehavior? = null,
+    isFilter: Boolean,
     onClickProfile: () -> Unit,
     onClickFilter: () -> Unit
 ) {
@@ -51,6 +52,7 @@ fun SpotTopBar(
         navigationIcon = {
             IconButton(
                 modifier = Modifier.padding(horizontal = 8.dp),
+                enabled = false,
                 onClick = onClickProfile
             ) {
                 Icon(
@@ -68,7 +70,7 @@ fun SpotTopBar(
             ) {
                 Icon(
                     modifier = Modifier.size(28.dp),
-                    painter = painterResource(id = R.drawable.ic_filter_turn_off),
+                    painter = if(isFilter) painterResource(id = R.drawable.ic_filter_turn_on) else painterResource(id = R.drawable.ic_filter_turn_off),
                     contentDescription = stringResource(id = R.string.icon_filter),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -83,6 +85,7 @@ fun SpotTopBar(
 fun SpotTopBarPreview() {
     FeriaSpotTheme {
         SpotTopBar(
+            isFilter = true,
             onClickProfile = {},
             onClickFilter = {}
         )

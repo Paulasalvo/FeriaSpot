@@ -42,14 +42,17 @@ import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 @Composable
 fun SpotCard(
     spot: Spot,
-    onClick: () -> Unit,
+    onClick: (Spot) -> Unit,
+    onClickShare: (Spot) -> Unit,
     onClickMap: (LatLng) -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 32.dp),
-        onClick = onClick
+        onClick = {
+            onClick(spot)
+        }
     ) {
         Column {
             Box(
@@ -81,7 +84,7 @@ fun SpotCard(
                 ) {
                     Spacer(modifier = Modifier.weight(1f))
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { onClickShare(spot) },
                         colors = IconButtonDefaults.iconButtonColors(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -164,6 +167,7 @@ fun SpotCardPreview() {
         SpotCard(
             spot = getListFakeSpot().first(),
             onClick = {},
+            onClickShare = {},
             onClickMap = {}
         )
     }
