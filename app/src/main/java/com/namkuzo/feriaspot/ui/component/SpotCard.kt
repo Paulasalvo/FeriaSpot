@@ -34,17 +34,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.namkuzo.feriaspot.R
-import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.data.Spot
-import com.namkuzo.feriaspot.data.getListFakeSpot
+import com.namkuzo.feriaspot.data.source.Source
 import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
+import java.net.URLDecoder
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun SpotCard(
     spot: Spot,
     onClick: (Spot) -> Unit,
     onClickShare: (Spot) -> Unit,
-    onClickMap: (LatLng) -> Unit
+    onClickMap: (Double, Double) -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
@@ -58,7 +60,7 @@ fun SpotCard(
             Box(
                 modifier = Modifier.background(color = MaterialTheme.colorScheme.surface)
             ) {
-                if (spot.imageUrl.isBlank()) {
+                if (spot.imageUrlEncoded.isBlank()) {
                     Image(
                         modifier = Modifier
                             .height(180.dp)
@@ -72,7 +74,7 @@ fun SpotCard(
                         modifier = Modifier
                             .height(180.dp)
                             .fillMaxWidth(),
-                        model = spot.imageUrl,
+                        model = URLDecoder.decode(spot.imageUrlEncoded, StandardCharsets.UTF_8.toString()),
                         contentDescription = stringResource(id = R.string.image),
                         contentScale = ContentScale.FillWidth
                     )
@@ -126,7 +128,7 @@ fun SpotCard(
                 IconButton(
                     modifier = Modifier.size(48.dp),
                     onClick = {
-                        spot.latlng?.let { onClickMap(it) }
+                        onClickMap(spot.latitude ?: 0.0, spot.longitude ?: 0.0)
                     }
                 ) {
                     Icon(
@@ -165,10 +167,10 @@ fun SpotCard(
 fun SpotCardPreview() {
     FeriaSpotTheme {
         SpotCard(
-            spot = getListFakeSpot().first(),
+            spot = Source.getFakeSpot(),
             onClick = {},
             onClickShare = {},
-            onClickMap = {}
+            onClickMap = {_, _ -> }
         )
     }
 }

@@ -2,7 +2,6 @@ package com.namkuzo.feriaspot.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.data.source.Source
 import com.namkuzo.feriaspot.network.SpotService
@@ -10,6 +9,8 @@ import com.namkuzo.feriaspot.network.getService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 class HomeViewModel : ViewModel() {
     private val service: SpotService = getService()
@@ -33,8 +34,9 @@ class HomeViewModel : ViewModel() {
                         it.comuna,
                         it.standDay,
                         it.schedule,
-                        it.imageUrl.orEmpty(),
-                        LatLng(it.latitud, it.longitud)
+                        URLEncoder.encode(it.imageUrl.orEmpty(), StandardCharsets.UTF_8.toString()),
+                        it.latitud,
+                        it.longitud
                     )
                 })
             } catch (e: Exception) {

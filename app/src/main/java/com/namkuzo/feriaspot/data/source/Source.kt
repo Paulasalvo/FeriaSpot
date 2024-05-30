@@ -1,5 +1,7 @@
 package com.namkuzo.feriaspot.data.source
 
+import com.namkuzo.feriaspot.data.Spot
+
 object Source {
     fun getAllComunas() = listOf(
         "ALHUÉ",
@@ -52,5 +54,16 @@ object Source {
         "TILTIL",
         "VITACURA"
     )
+
+    fun getListFakeSpot() = listOf(
+        Spot(1, "Test 1","La Florida", "Lunes - Martes", "08:30 - 14:00", "", null, null),
+        Spot(2, "Test 2","La Reina", "Lunes - Martes", "08:30 - 14:00", "", null, null),
+        Spot(3, "Test 3","Las Condes", "Lunes - Martes", "08:30 - 14:00", "", null, null),
+        Spot(4, "Test 4","Buin", "Lunes - Martes", "08:30 - 14:00", "", null, null),
+        Spot(5, "Test 5","La Florida", "Lunes - Martes", "08:30 - 14:00", "", null, null)
+    )
+
+    fun getFakeSpot() =
+        Spot(1, "Test 1","La Florida", "Lunes - Martes", "08:30 - 14:00", "", null, null)
 }
 

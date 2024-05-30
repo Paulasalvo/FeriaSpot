@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.data.Spot
-import com.namkuzo.feriaspot.home.HomeScreen
 import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 import com.namkuzo.feriaspot.util.ShareFormatSpot
 
@@ -18,8 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FeriaSpotTheme {
-                HomeScreen(
-                    onClickNavigationItem = {},
+                FeriaSpotApp(
                     onClickShare = ::shareSpot,
                     onClickMap = ::openMap
                 )
@@ -35,8 +32,8 @@ class MainActivity : ComponentActivity() {
         startActivity(sendIntent)
     }
 
-    private fun openMap(latLng: LatLng) {
-        val uri = "http://maps.google.com/maps?q=loc:${latLng.latitude},${latLng.longitude}?z=15"
+    private fun openMap(latitude: Double, longitude: Double) {
+        val uri = "http://maps.google.com/maps?q=loc:${latitude},${longitude}?z=15"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
         intent.setPackage("com.google.android.apps.maps")
         try {

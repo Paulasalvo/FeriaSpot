@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,9 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.namkuzo.feriaspot.R
-import com.namkuzo.feriaspot.data.LatLng
 import com.namkuzo.feriaspot.data.Spot
-import com.namkuzo.feriaspot.data.getListFakeSpot
+import com.namkuzo.feriaspot.data.source.Source
 import com.namkuzo.feriaspot.ui.component.SpotCard
 import com.namkuzo.feriaspot.ui.component.SpotFilterDialog
 import com.namkuzo.feriaspot.ui.component.SpotTopBar
@@ -50,14 +50,15 @@ import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
     onClickNavigationItem: () -> Unit,
+    onClickSpot: (Spot) -> Unit,
     onClickShare: (Spot) -> Unit,
-    onClickMap: (LatLng) -> Unit
+    onClickMap: (Double, Double) -> Unit
 ) {
     val spotUiState by viewModel.spotsStateFlow.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var dialogFilterState by rememberSaveable{ mutableStateOf(false) }
     var isFilter by rememberSaveable { mutableStateOf(false) }
-    var selectedIndexItem by remember { mutableStateOf(-1) }
+    var selectedIndexItem by remember { mutableIntStateOf(-1) }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -115,6 +116,7 @@ fun HomeScreen(
                 HomeScreen(
                     modifier = Modifier.padding(paddingValues),
                     spots = (spotUiState as? SpotUiState.Success)?.spots ?: emptyList(),
+                    onClickSpot = onClickSpot,
                     onClickShare = onClickShare,
                     onClickMap = onClickMap
                 )
@@ -158,8 +160,9 @@ fun HomeScreen(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     spots: List<Spot>,
+    onClickSpot: (Spot) -> Unit,
     onClickShare: (Spot) -> Unit,
-    onClickMap: (LatLng) -> Unit
+    onClickMap: (Double, Double) -> Unit
 ){
     if (spots.isNotEmpty()) {
         Column(
@@ -171,7 +174,9 @@ private fun HomeScreen(
                 items(spots) { spot ->
                     SpotCard(
                         spot = spot,
-                        onClick = {  },
+                        onClick = {
+                            onClickSpot(it)
+                        },
                         onClickShare = onClickShare,
                         onClickMap = onClickMap
                     )
@@ -193,9 +198,10 @@ private fun HomeScreen(
 fun HomeScreenPreview() {
     FeriaSpotTheme {
         HomeScreen(
-            spots = getListFakeSpot(),
+            spots = Source.getListFakeSpot(),
+            onClickSpot = {},
             onClickShare = {},
-            onClickMap = {}
+            onClickMap = { _, _ -> }
         )
     }
 }

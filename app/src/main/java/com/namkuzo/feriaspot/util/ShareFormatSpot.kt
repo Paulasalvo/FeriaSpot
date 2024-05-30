@@ -4,8 +4,8 @@ import com.namkuzo.feriaspot.data.Spot
 
 object ShareFormatSpot {
     fun getShareText(spot: Spot) : String {
-        val mapLink = "https://www.google.com/maps/search/?api=1&query=${spot.latlng?.latitude},${spot.latlng?.longitude}"
-        val shareText = if (spot.latlng?.latitude != null && spot.latlng.longitude != null) {
+        val mapLink = "https://www.google.com/maps/search/?api=1&query=${spot.latitude},${spot.longitude}"
+        val shareText = if (spot.latitude != null && spot.longitude != null) {
             """
             Feria Spot:
             Nombre: ${spot.name}
