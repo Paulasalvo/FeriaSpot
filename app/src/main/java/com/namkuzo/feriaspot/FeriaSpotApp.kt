@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.namkuzo.feriaspot.data.Spot
-import com.namkuzo.feriaspot.home.HomeScreen
-import com.namkuzo.feriaspot.spotdetail.SpotDetailScreen
+import com.namkuzo.feriaspot.feature.home.HomeScreen
+import com.namkuzo.feriaspot.feature.spotdetail.SpotDetailScreen
 import com.namkuzo.feriaspot.util.parcelableType
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
@@ -17,7 +17,7 @@ fun FeriaSpotApp(
     onClickShare: (Spot) -> Unit,
     onClickMap: (Double, Double) -> Unit
 ) {
-    val navController =  rememberNavController()
+    val navController = rememberNavController()
 
     NavHost(
         navController = navController,
@@ -40,7 +40,7 @@ fun FeriaSpotApp(
             SpotDetailScreen(
                 spot = spot,
                 onBack = {
-                    navController.popBackStack(Home, false)
+                    navController.navigate(Home)
                 }
             )
         }

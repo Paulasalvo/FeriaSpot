@@ -1,4 +1,4 @@
-package com.namkuzo.feriaspot.data
+package com.namkuzo.feriaspot.data.dto
 
 data class SpotDTO(
     val id : Int = 0,

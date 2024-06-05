@@ -9,4 +9,5 @@
     <string name="no_image">Sin imagen</string>
     <string name="image">Imagen</string>
     <string name="app_not_found">No se ha podido abrir la app de maps</string>
+    <string name="days">Days: %s</string>
 </resources>

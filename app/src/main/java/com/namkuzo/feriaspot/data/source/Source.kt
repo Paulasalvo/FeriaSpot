@@ -56,14 +56,60 @@ object Source {
     )
 
     fun getListFakeSpot() = listOf(
-        Spot(1, "Test 1","La Florida", "Lunes - Martes", "08:30 - 14:00", "", null, null),
-        Spot(2, "Test 2","La Reina", "Lunes - Martes", "08:30 - 14:00", "", null, null),
-        Spot(3, "Test 3","Las Condes", "Lunes - Martes", "08:30 - 14:00", "", null, null),
-        Spot(4, "Test 4","Buin", "Lunes - Martes", "08:30 - 14:00", "", null, null),
-        Spot(5, "Test 5","La Florida", "Lunes - Martes", "08:30 - 14:00", "", null, null)
+        Spot(
+            id = 1,
+            name = "Test 1",
+            comuna = "La Florida",
+            standDay = "Lunes - Martes",
+            schedule = "08:30 - 14:00",
+            imageUrlEncoded = "",
+            mainStreet = "Rojas magallanes",
+            stall = "puestos 20",
+            number = 20,
+            latitude = null,
+            longitude = null
+        ),
+        Spot(
+            2,
+            "Test 2",
+            "La Reina",
+            "Lunes - Martes",
+            "08:30 - 14:00",
+            "",
+            "Rojas magallanes",
+            stall = "puestos 20",
+            number = 20,
+            latitude = null,
+            longitude = null
+        ),
+        Spot(
+            3,
+            "Test 3",
+            "Las Condes",
+            "Lunes - Martes",
+            "08:30 - 14:00",
+            "",
+            "Rojas magallanes",
+            stall = "puestos 20",
+            number = 20,
+            latitude = null,
+            longitude = null
+        )
     )
 
     fun getFakeSpot() =
-        Spot(1, "Test 1","La Florida", "Lunes - Martes", "08:30 - 14:00", "", null, null)
+        Spot(
+            1,
+            "Test 1",
+            "La Florida",
+            "Lunes - Martes",
+            "08:30 - 14:00",
+            "",
+            "Rojas magallanes",
+            "50",
+            number = 20,
+            latitude = null,
+            longitude = null
+        )
 }
 

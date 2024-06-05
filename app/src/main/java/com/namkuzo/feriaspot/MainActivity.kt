@@ -10,7 +10,10 @@ import androidx.activity.compose.setContent
 import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 import com.namkuzo.feriaspot.util.ShareFormatSpot
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

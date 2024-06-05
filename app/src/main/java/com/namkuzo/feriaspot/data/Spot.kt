@@ -13,6 +13,9 @@ data class Spot(
     val standDay : String,
     val schedule : String,
     val imageUrlEncoded: String,
+    val mainStreet: String,
+    val stall : String,
+    val number : Int,
     val latitude: Double?,
     val longitude: Double?
 ) : Parcelable
