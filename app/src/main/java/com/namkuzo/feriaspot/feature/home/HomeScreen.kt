@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,12 +38,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.namkuzo.feriaspot.R
 import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.data.source.Source
 import com.namkuzo.feriaspot.ui.component.SpotCard
-import com.namkuzo.feriaspot.ui.component.SpotFilterDialog
 import com.namkuzo.feriaspot.ui.component.SpotTopBar
 import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 
@@ -56,10 +55,11 @@ fun HomeScreen(
     onClickMap: (Double, Double) -> Unit
 ) {
     val spotUiState by viewModel.spotsStateFlow.collectAsStateWithLifecycle()
+    val filterState by viewModel.filterCountry.collectAsStateWithLifecycle()
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var dialogFilterState by rememberSaveable{ mutableStateOf(false) }
     var isFilter by rememberSaveable { mutableStateOf(false) }
-    var selectedIndexItem by remember { mutableIntStateOf(-1) }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -101,7 +101,7 @@ fun HomeScreen(
         }
     ) { paddingValues ->
 
-        when (spotUiState) {
+        when (val state = spotUiState) {
             is SpotUiState.Loading -> {
                 Column(
                     modifier = Modifier
@@ -116,7 +116,7 @@ fun HomeScreen(
             is SpotUiState.Success -> {
                 HomeScreen(
                     modifier = Modifier.padding(paddingValues),
-                    spots = (spotUiState as? SpotUiState.Success)?.spots ?: emptyList(),
+                    spots = state.spots,
                     onClickSpot = onClickSpot,
                     onClickShare = onClickShare,
                     onClickMap = onClickMap
@@ -129,7 +129,7 @@ fun HomeScreen(
                     Card {
                         Text(
                             modifier = Modifier.padding(16.dp),
-                            text = "Error ${(spotUiState as? SpotUiState.Error)?.message}"
+                            text = "Error ${state.message}"
                         )
                     }
                 }
@@ -141,17 +141,21 @@ fun HomeScreen(
     }
 
     if (dialogFilterState) {
-        SpotFilterDialog(
-            items = viewModel.getComunas(),
-            itemSelected = selectedIndexItem,
-            onClick = { index ->
-                selectedIndexItem = index
-                viewModel.fetchSpots(index)
-                isFilter = index != -1
+        SpotFilter(
+            filterCountry = filterState,
+            onClose = {
                 dialogFilterState = false
             },
-            onDismissRequest = {
+            onSelect = viewModel::setFilterSelected,
+            onFilter = {
+                viewModel.applyFilter()
                 dialogFilterState = false
+                isFilter = true
+            },
+            onClear ={
+                viewModel.clearFilter()
+                dialogFilterState = false
+                isFilter = false
             }
         )
     }
@@ -172,7 +176,12 @@ private fun HomeScreen(
             LazyColumn(
                 contentPadding = PaddingValues(top = 16.dp)
             ) {
-                items(spots) { spot ->
+                items(
+                    items = spots,
+                    key = { spot ->
+                        spot.id
+                    }
+                ) { spot ->
                     SpotCard(
                         spot = spot,
                         onClick = {
@@ -186,10 +195,14 @@ private fun HomeScreen(
         }
     } else {
         Column(
+            modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "No hay nada :(")
+            Text(
+                text = stringResource(R.string.no_result_found),
+                style = MaterialTheme.typography.titleLarge
+            )
         }
     }
 }
@@ -200,6 +213,19 @@ fun HomeScreenPreview() {
     FeriaSpotTheme {
         HomeScreen(
             spots = Source.getListFakeSpot(),
+            onClickSpot = {},
+            onClickShare = {},
+            onClickMap = { _, _ -> }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun HomeScreenEmptyPreview() {
+    FeriaSpotTheme {
+        HomeScreen(
+            spots = emptyList(),
             onClickSpot = {},
             onClickShare = {},
             onClickMap = { _, _ -> }

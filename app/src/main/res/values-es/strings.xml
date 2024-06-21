@@ -10,4 +10,13 @@
     <string name="image">Imagen</string>
     <string name="app_not_found">No se ha podido abrir la app de maps</string>
     <string name="days">Days: %s</string>
+    <string name="select_zone">Seleciona la zona</string>
+    <string name="region">Region</string>
+    <string name="select_comuna">Seleciona la comuna</string>
+    <string name="apply">Aplicar</string>
+    <string name="clear">Limpiar</string>
+    <string name="select_region">Selecionar region</string>
+    <string name="comuna">Comuna</string>
+    <string name="ferias_libres">Ferias Libres</string>
+    <string name="no_result_found">No se han encontrado resultado.</string>
 </resources>

@@ -43,7 +43,7 @@ fun SpotTopBar(
                     .fillMaxWidth()
                     .padding(8.dp),
                 textAlign = TextAlign.Center,
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = R.string.ferias_libres),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Black,
                 color = MaterialTheme.colorScheme.onPrimaryContainer

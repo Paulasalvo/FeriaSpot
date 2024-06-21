@@ -8,8 +8,8 @@ import androidx.navigation.toRoute
 import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.feature.home.HomeScreen
 import com.namkuzo.feriaspot.feature.spotdetail.SpotDetailScreen
+import com.namkuzo.feriaspot.navigation.NavDestination
 import com.namkuzo.feriaspot.util.parcelableType
-import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
 @Composable
@@ -21,36 +21,28 @@ fun FeriaSpotApp(
 
     NavHost(
         navController = navController,
-        startDestination = Home
+        startDestination = NavDestination.Home
     ){
-        composable<Home>{
+        composable<NavDestination.Home>{
             HomeScreen(
                 onClickNavigationItem = {},
                 onClickSpot = { spot ->
-                    navController.navigate(SpotDetail(spot))
+                    navController.navigate(NavDestination.SpotDetail(spot))
                 },
                 onClickShare = onClickShare,
                 onClickMap = onClickMap
             )
         }
-        composable<SpotDetail>(
+        composable<NavDestination.SpotDetail>(
             typeMap = mapOf(typeOf<Spot>() to parcelableType<Spot>())
         ) {
-            val spot = it.toRoute<SpotDetail>().spot
+            val spot = it.toRoute<NavDestination.SpotDetail>().spot
             SpotDetailScreen(
                 spot = spot,
                 onBack = {
-                    navController.navigate(Home)
+                    navController.navigate(NavDestination.Home)
                 }
             )
         }
     }
 }
-
-@Serializable
-object Home
-
-@Serializable
-data class SpotDetail(
-    val spot: Spot
-)

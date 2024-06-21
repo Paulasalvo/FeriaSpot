@@ -92,6 +92,8 @@ dependencies {
 
     // HTTP Client
     implementation(libs.square.retrofit2)
+    implementation(libs.logging.interceptor)
+
 
     // Json library
     implementation(libs.square.converter.moshi)

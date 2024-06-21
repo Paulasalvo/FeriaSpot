@@ -55,6 +55,25 @@ object Source {
         "VITACURA"
     )
 
+    fun getAllRegions() = listOf(
+        "Arica y Parinacota",
+        "Tarapacá",
+        "Antofagasta",
+        "Atacama",
+        "Coquimbo",
+        "Valparaíso",
+        "Región del Libertador Gral. Bernardo O’Higgins",
+        "Región del Maule",
+        "Región de Ñuble",
+        "Región del Biobío",
+        "Región de la Araucanía",
+        "Región de Los Ríos",
+        "Región de Los Lagos",
+        "Región Aisén del Gral. Carlos Ibáñez del Campo",
+        "Región de Magallanes y de la Antártica Chilena",
+        "Región Metropolitana de Santiago"
+    )
+
     fun getListFakeSpot() = listOf(
         Spot(
             id = 1,

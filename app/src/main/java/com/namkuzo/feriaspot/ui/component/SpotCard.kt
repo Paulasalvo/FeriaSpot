@@ -38,7 +38,6 @@ import com.namkuzo.feriaspot.data.Spot
 import com.namkuzo.feriaspot.data.source.Source
 import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 import java.net.URLDecoder
-import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 @Composable

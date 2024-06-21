@@ -1,13 +1,11 @@
-package com.namkuzo.feriaspot.ui.component
+package com.namkuzo.feriaspot.feature.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,28 +20,36 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.namkuzo.feriaspot.data.source.Source
 import com.namkuzo.feriaspot.ui.theme.FeriaSpotTheme
 
 @Composable
 fun SpotFilterDialog(
+    title: String,
     items: List<String>,
-    itemSelected: Int,
-    onClick: (Int) -> Unit,
+    itemSelected: String,
+    onClick: (String) -> Unit,
     onDismissRequest: ()->Unit
 ) {
-    Dialog(onDismissRequest = onDismissRequest) {
+    Dialog(
+        onDismissRequest = onDismissRequest,
+        DialogProperties(
+            usePlatformDefaultWidth = false
+        )
+    ) {
         Surface(
-            modifier = Modifier,
+            modifier = Modifier.padding(vertical = 64.dp, horizontal = 16.dp),
             shape = RoundedCornerShape(8.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(vertical = 8.dp),
             ) {
                 Text(
-                    text = "Seleciona una comuna"
+                    modifier = Modifier.padding(8.dp),
+                    text = title
                 )
                 LazyColumn(
                     modifier = Modifier
@@ -54,34 +60,21 @@ fun SpotFilterDialog(
                         Row(
                             modifier = Modifier
                                 .clickable {
-                                    onClick(index)
+                                    onClick(item)
                                 }
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(16.dp))
                             ,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            RadioButton(selected = itemSelected == index, onClick = {
-                                onClick(index)
+                            RadioButton(selected = itemSelected == item, onClick = {
+                                onClick(item)
                             })
                             Text(text = item)
                         }
                     }
 
                 }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(
-                        onClick = { onClick(-1) }
-                    ) {
-                        Text(text = "Limpiar")
-                    }
-                }
-
             }
         }
     }
@@ -92,8 +85,9 @@ fun SpotFilterDialog(
 fun SpotFilterDialogPreview() {
     FeriaSpotTheme {
         SpotFilterDialog(
+            title = "Selecione",
             items = Source.getAllComunas(),
-            itemSelected = 0,
+            itemSelected = "",
             onClick = {},
             onDismissRequest = {}
         )
